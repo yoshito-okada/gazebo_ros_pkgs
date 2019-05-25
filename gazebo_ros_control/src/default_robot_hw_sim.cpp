@@ -237,7 +237,8 @@ bool DefaultRobotHWSim::initSim(
         // going to be called. joint->SetParam("fmax") must *not* be called if joint->SetForce() is
         // going to be called.
 #if GAZEBO_MAJOR_VERSION > 2
-        joint->SetParam("fmax", 0, joint_effort_limits_[j]);
+        //joint->SetParam("fmax", 0, joint_effort_limits_[j]);
+        joint->SetParam("fmax", 0, 1e16);
 #else
         joint->SetMaxForce(0, joint_effort_limits_[j]);
 #endif
@@ -401,7 +402,7 @@ void DefaultRobotHWSim::writeSim(ros::Time time, ros::Duration period)
 #if GAZEBO_MAJOR_VERSION >= 9
         sim_joints_[j]->SetPosition(0, joint_position_command_[j], true);
 #else
-       SetPositionImpl::Call(sim_joints_[j], 0, joint_position_command_[j], true);
+        SetPositionImpl::Call(sim_joints_[j], 0, joint_position_command_[j], true);
 #endif
         break;
 
